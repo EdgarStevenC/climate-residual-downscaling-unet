@@ -1,0 +1,30 @@
+name: ipsl-aid
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy<2
+  - scipy
+  - pandas
+  - xarray
+  - netcdf4
+  - h5netcdf
+  - matplotlib
+  - scikit-learn
+  - cartopy
+  - ipykernel
+  - notebook
+  - seaborn
+  - tensorboard
+  - pip
+  - pip:
+      - torch==2.2.2
+      - torchvision==0.17.2
+      - torchaudio==2.2.2
+      - rich
+      - mpltex
+      - tqdm
+      - einops
+      - pyyaml
+      - h5py
+      - cdsapi

@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Environments
+.venv/
+.env/
+*.egg-info/
+
+# Data
+data/
+*.zarr/
+*.nc
+*.h5
+*.hdf5
+
+# Results
+results/*.png
+results/*.pdf
+results/*.csv
+results/*.npy
+results/*.pt
+results/*.pth
+
+# OS
+.DS_Store
+
+# Jupyter virtual documents
+.virtual_documents/
+
+# Model checkpoints
+results/checkpoints/
