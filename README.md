@@ -57,31 +57,30 @@ A controlled degradation operator is applied to the original ERA5 temperature fi
 
 Let
 
-[
+$$
 y_{\mathrm{HR}}
-]
+$$
 
 denote the original ERA5 field and
 
-[
+$$
 y_{\mathrm{smooth}}
-]
+$$
 
 the spatially smoothed field.
 
 The information removed by the degradation operation is represented by the residual:
 
-[
-R = y_{\mathrm{HR}} - y_{\mathrm{smooth}}.
-]
+$$
+R = y_{\mathrm{HR}} - y_{\mathrm{smooth}}
+$$
 
 The reconstruction problem can therefore be written as
 
-[
-\hat{y}_{\mathrm{HR}}
-=
-y_{\mathrm{smooth}} + \hat{R}.
-]
+$$
+\hat{y}_{\mathrm{HR}} =
+y_{\mathrm{smooth}} + \hat{R}
+$$
 
 Instead of asking the neural network to reconstruct the complete temperature field from scratch, the model only needs to estimate the missing spatial correction.
 
@@ -99,21 +98,18 @@ Importantly, this experiment does **not** change the number of grid cells. The o
 
 The learning problem is
 
-[
-T_{\mathrm{smooth}}
-\longrightarrow
-\hat{R},
-]
+$$
+T_{\mathrm{smooth}} \longrightarrow \hat{R}
+$$
 
 where the neural network estimates the residual removed by spatial smoothing.
 
 The reconstructed field is then
 
-[
-\hat{T}_{\mathrm{HR}}
-=
-T_{\mathrm{smooth}}+\hat{R}.
-]
+$$
+\hat{T}_{\mathrm{HR}} =
+T_{\mathrm{smooth}} + \hat{R}
+$$
 
 This formulation separates two components:
 
@@ -137,17 +133,16 @@ In this experiment it is used as a **deterministic image-to-image regression net
 
 The input is the normalized smoothed temperature field:
 
-[
+$$
 x_{\mathrm{norm}}
-]
+$$
 
 and the network predicts the normalized residual:
 
-[
-\hat{R}_{\mathrm{norm}}
-=
-G_\theta(x_{\mathrm{norm}}).
-]
+$$
+\hat{R}_{\mathrm{norm}} =
+G_\theta(x_{\mathrm{norm}})
+$$
 
 A U-Net is particularly suitable for this task because it combines:
 
@@ -207,27 +202,24 @@ The emphasis is therefore on **methodological clarity and reproducibility**, rat
 
 During inference, the predicted normalized residual is transformed back into physical temperature units:
 
-[
-\hat{R}
-=
-\hat{R}_{\mathrm{norm}}\sigma_R+\mu_R.
-]
+$$
+\hat{R} =
+\hat{R}_{\mathrm{norm}}\sigma_R + \mu_R
+$$
 
 The final reconstructed temperature field is
 
-[
-\hat{y}_{\mathrm{HR}}
-=
-y_{\mathrm{smooth}}+\hat{R}.
-]
+$$
+\hat{y}_{\mathrm{HR}} =
+y_{\mathrm{smooth}} + \hat{R}
+$$
 
 The natural baseline is simply
 
-[
-y_{\mathrm{baseline}}
-=
-y_{\mathrm{smooth}},
-]
+$$
+y_{\mathrm{baseline}} =
+y_{\mathrm{smooth}}
+$$
 
 which corresponds to assuming that no residual correction is necessary.
 
@@ -245,19 +237,17 @@ The most informative diagnostic is not only the reconstructed temperature field,
 
 The true missing spatial information is
 
-[
-R
-=
-y_{\mathrm{HR}}-y_{\mathrm{smooth}},
-]
+$$
+R =
+y_{\mathrm{HR}} - y_{\mathrm{smooth}}
+$$
 
 while the network estimates
 
-[
-\hat{R}
-=
-G_\theta(y_{\mathrm{smooth}}).
-]
+$$
+\hat{R} =
+G_\theta(y_{\mathrm{smooth}})
+$$
 
 ### True versus predicted residual
 
@@ -314,21 +304,18 @@ This formulation is particularly useful for inverse problems in which a physical
 
 The current implementation is deterministic:
 
-[
-T_{\mathrm{smooth}}
-\rightarrow
-\hat{R}.
-]
+$$
+T_{\mathrm{smooth}} \rightarrow \hat{R}
+$$
 
 For a given degraded field, the model produces one residual reconstruction.
 
 A probabilistic or diffusion-based formulation would instead learn a distribution of plausible residual fields. During inference, such a model could start from noise and generate different fine-scale corrections conditioned on the coarse climate state:
 
-[
-(\mathrm{noise},y_{\mathrm{coarse}})
-\rightarrow
-\hat{R}.
-]
+$$
+(\mathrm{noise}, y_{\mathrm{coarse}})
+\rightarrow \hat{R}
+$$
 
 This distinction becomes particularly relevant for variables such as **precipitation**, where fine-scale structure can be intermittent, strongly non-Gaussian, and intrinsically uncertain.
 
